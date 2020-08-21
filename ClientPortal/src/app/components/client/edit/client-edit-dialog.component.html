@@ -1,0 +1,120 @@
+<div>
+    <app-loading [loading]="loading">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 value">
+                <div class="title">
+                    <span>Nome</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Nome completo"
+                        [required]="true" [(ngModel)]="client.name">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3 value">
+                <div class="title">
+                    <span>Data de nascimento</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Data de nascimento"
+                        [required]="true" [(ngModel)]="client.dateOfBirth">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3 value">
+                <div class="title">
+                    <span>Sexo</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Sexo" [required]="true"
+                        [(ngModel)]="client.gender">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-2 value">
+
+                <div class="title">
+                    <span>CEP</span>
+                </div>
+                <div class="form-group">
+                    <input #postalCode="ngModel" type="text" mask="00000-000" name="zipCode" [required]="true"
+                        class="form-control" (change)="updateZipCode()" [(ngModel)]="client.zipCode" />
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 value">
+                <div class="title">
+                    <span>Endereço</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Endereço" [required]="true"
+                        [(ngModel)]="client.address">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-2 value">
+                <div class="title">
+                    <span>Número</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Número" [required]="true"
+                        [(ngModel)]="client.addressNumber">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 value">
+                <div class="title">
+                    <span>Complemento</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Complemento" [required]="false"
+                        [(ngModel)]="client.complement">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3 value">
+                <div class="title">
+                    <span>Bairro</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Bairro" [required]="true"
+                        [(ngModel)]="client.district" [disabled]="disabledFields">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3 value">
+                <div class="title">
+                    <span>País</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="País" [required]="true"
+                        [(ngModel)]="client.country" [disabled]="disabledFields">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3 value">
+                <div class="title">
+                    <span>Estado</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Estado" [required]="true"
+                        [(ngModel)]="client.state" [disabled]="disabledFields">
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-3 value">
+                <div class="title">
+                    <span>Cidade</span>
+                </div>
+                <div class="form-group">
+                    <input #name="ngModel" type="text" class="form-control" placeholder="Cidade" [required]="true"
+                        [(ngModel)]="client.city" [disabled]="disabledFields" >
+                </div>
+            </div>
+        </div>
+    </app-loading>
+</div>
+<div class="row vertical-align">
+    <div class="col-12 value d-flex justify-content-end mt-4" style="padding: 20px">
+        <button type="button" class="btn btn-outline-dark mr-3 button-style" (click)="cancel()">
+            Cancelar
+        </button>
+
+        <button type="button" class="btn btn-primary button-style" (click)="save()" [disabled]="loading">
+            Salvar
+        </button>
+    </div>
+</div>

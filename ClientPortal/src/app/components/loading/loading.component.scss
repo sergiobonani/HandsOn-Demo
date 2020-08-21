@@ -1,0 +1,18 @@
+.loading-overlay {
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    opacity: 0.8 !important;
+  }
+  
+  .loading-spinner {
+    background-image: url("src/assets/img/ajax-loader.gif");
+    width: 80px;
+    height: 80px;
+  }
+  
