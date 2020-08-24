@@ -4,6 +4,7 @@ import { Client } from 'src/app/models/client.model';
 import { ClientService } from 'src/app/services/client.service';
 import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { CepService } from 'src/app/services/cep.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-client-edit-dialog',
@@ -20,49 +21,60 @@ export class ClientEditDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public client: Client,
     public dataService: ClientService,
     public alertService: AlertService,
-    public cepService: CepService) { }
+    public cepService: CepService,
+    public datePipe: DatePipe) { }
 
   ngOnInit() {
+
+    if(this.client){      
+      this.client.dateOfBirth = this.datePipe.transform(this.client.dateOfBirth, 'yyyy-MM-dd')
+    }else{
+      this.client = new Client();
+    }
   }
 
-  cancel(){
+  cancel() {
     this.dialogRef.close()
   }
 
-  updateZipCode():void{
+  updateZipCode(): void {
     this.loading = true;
-    this.cepService.getAddress(this.client.zipCode).subscribe(x => {
-      this.client.state = x.uf;
-      this.client.country = 'Brasil';
-      this.client.district = x.bairro;
-      this.client.complement = x.complemento;
-      this.client.city = x.localidade;
-      this.client.address = x.logradouro;
+    this.cepService.getAddress(this.client.address.zipCode).subscribe(x => {
+      this.client.address.state = x.uf;
+      this.client.address.country = 'Brasil';
+      this.client.address.district = x.bairro;
+      this.client.address.complement = x.complemento;
+      this.client.address.city = x.localidade;
+      this.client.address.addressDescription = x.logradouro;
       this.loading = false;
       this.disabledFields = true;
-    }, error =>{
+    }, error => {
       this.alertService.showStickyMessage("", MessageSeverity.error, error);
       this.loading = false;
     });
   }
 
-  save(): void {
+  onSelect(value): void {
+
+  }
+
+  save(): void {   
     this.loading = true;
-    if(this.client.id){
-      this.dataService.update(this.client).subscribe(data =>{
+    if (this.client.id) {
+      this.dataService.update(this.client).subscribe(data => {
         this.alertService.showStickyMessage("Editado com sucesso", MessageSeverity.success);
         this.dialogRef.close();
         this.loading = false;
-      }, error =>{
+      }, error => {
         this.alertService.showStickyMessage("", MessageSeverity.error, error);
         this.loading = false;
       });
-    }else{
-      this.dataService.add(this.client).subscribe(data =>{
+    } else {
+      this.dataService.add(this.client).subscribe(data => {
         this.alertService.showStickyMessage("Criado com sucesso", MessageSeverity.success);
         this.dialogRef.close();
         this.loading = false;
-      }, error =>{
+      }, error => {
         this.alertService.showStickyMessage("", MessageSeverity.error, error);
         this.loading = false;
       });

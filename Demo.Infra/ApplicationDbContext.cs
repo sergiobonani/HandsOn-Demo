@@ -19,6 +19,7 @@ namespace Demo.Infra
         { }
 
         public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<Address> Address { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder ob)
         {
@@ -30,6 +31,7 @@ namespace Demo.Infra
             base.OnModelCreating(builder);
 
             builder.Entity<Client>().ToTable("clientes");
+            builder.Entity<Address>().ToTable("enderecos");
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

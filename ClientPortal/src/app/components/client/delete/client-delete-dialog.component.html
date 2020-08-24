@@ -1,1 +1,9 @@
-<p>delete works!</p>
+<div class="container">
+    <h3 mat-dialog-title>Você está prestes a excluir o cliente {{data.name}}.<br/>Tem certeza dessa operação?</h3>
+  
+    <div mat-dialog-actions>
+      <button mat-button (click)="confirmDelete()">Sim</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Não</button>
+    </div>
+  </div>
+  

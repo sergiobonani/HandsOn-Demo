@@ -106,6 +106,15 @@ namespace Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to País.
+        /// </summary>
+        public static string Country {
+            get {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de nascimento.
         /// </summary>
         public static string DateOfBirth {
@@ -174,6 +183,15 @@ namespace Resource {
         public static string InvalidField {
             get {
                 return ResourceManager.GetString("InvalidField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campos passados estão inválidos.
+        /// </summary>
+        public static string InvalidFields {
+            get {
+                return ResourceManager.GetString("InvalidFields", resourceCulture);
             }
         }
         

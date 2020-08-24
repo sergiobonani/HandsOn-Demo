@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ClientPortal';
+
+  constructor(
+    private readonly router: Router
+  ){
+    
+  }
+  selectionClass(url: string) {
+    return this.router.url.indexOf(url) >= 0 ? 'bold-black' : '';
+  }
 }

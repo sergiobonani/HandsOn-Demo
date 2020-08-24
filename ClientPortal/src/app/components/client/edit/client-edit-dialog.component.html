@@ -1,4 +1,6 @@
 <div>
+    <h3 mat-dialog-title *ngIf="client && client.id">Editar cliente</h3>
+    <h3 mat-dialog-title *ngIf="!client || !client.id">Cadastrar cliente</h3>
     <app-loading [loading]="loading">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 value">
@@ -7,7 +9,7 @@
                 </div>
                 <div class="form-group">
                     <input #name="ngModel" type="text" class="form-control" placeholder="Nome completo"
-                        [required]="true" [(ngModel)]="client.name">
+                        [required]="true" [(ngModel)]="client.name"/>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 value">
@@ -15,8 +17,10 @@
                     <span>Data de nascimento</span>
                 </div>
                 <div class="form-group">
-                    <input #name="ngModel" type="text" class="form-control" placeholder="Data de nascimento"
-                        [required]="true" [(ngModel)]="client.dateOfBirth">
+                    <!-- <input #name="ngModel" type="text" class="form-control" placeholder="Data de nascimento"
+                        [required]="true" [(ngModel)]="client.dateOfBirth"> -->
+                    <input #name="ngModel" type="date" [min]="01-01-2000" [max]="31-12-9999" class="form-control"
+                        [(ngModel)]="client.dateOfBirth" [required]="true">
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-3 col-lg-3 value">
@@ -24,8 +28,13 @@
                     <span>Sexo</span>
                 </div>
                 <div class="form-group">
-                    <input #name="ngModel" type="text" class="form-control" placeholder="Sexo" [required]="true"
-                        [(ngModel)]="client.gender">
+                    <select class="form-control" [(ngModel)]="client.gender" (change)="onSelect($event.target.value)"
+                        id="sel1" [value]="0">
+                        <option value="0">--Selecione--</option>
+                        <option value="F"> Feminino </option>
+                        <option value="M"> Masculino </option>
+                        <option value="I"> Indefinido </option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -37,8 +46,8 @@
                     <span>CEP</span>
                 </div>
                 <div class="form-group">
-                    <input #postalCode="ngModel" type="text" mask="00000-000" name="zipCode" [required]="true"
-                        class="form-control" (change)="updateZipCode()" [(ngModel)]="client.zipCode" />
+                    <input #name="ngModel" type="text" mask="00000-000" name="zipCode" [required]="true"
+                        class="form-control" (change)="updateZipCode()" [(ngModel)]="client.address.zipCode" />
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 value">
@@ -47,7 +56,7 @@
                 </div>
                 <div class="form-group">
                     <input #name="ngModel" type="text" class="form-control" placeholder="Endereço" [required]="true"
-                        [(ngModel)]="client.address">
+                        [(ngModel)]="client.address.addressDescription">
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-2 value">
@@ -56,7 +65,7 @@
                 </div>
                 <div class="form-group">
                     <input #name="ngModel" type="text" class="form-control" placeholder="Número" [required]="true"
-                        [(ngModel)]="client.addressNumber">
+                        [(ngModel)]="client.address.addressNumber">
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-4 value">
@@ -65,7 +74,7 @@
                 </div>
                 <div class="form-group">
                     <input #name="ngModel" type="text" class="form-control" placeholder="Complemento" [required]="false"
-                        [(ngModel)]="client.complement">
+                        [(ngModel)]="client.address.complement">
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-3 value">
@@ -74,7 +83,7 @@
                 </div>
                 <div class="form-group">
                     <input #name="ngModel" type="text" class="form-control" placeholder="Bairro" [required]="true"
-                        [(ngModel)]="client.district" [disabled]="disabledFields">
+                        [(ngModel)]="client.address.district" [disabled]="disabledFields">
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-3 value">
@@ -83,7 +92,7 @@
                 </div>
                 <div class="form-group">
                     <input #name="ngModel" type="text" class="form-control" placeholder="País" [required]="true"
-                        [(ngModel)]="client.country" [disabled]="disabledFields">
+                        [(ngModel)]="client.address.country" [disabled]="disabledFields">
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-3 value">
@@ -92,7 +101,7 @@
                 </div>
                 <div class="form-group">
                     <input #name="ngModel" type="text" class="form-control" placeholder="Estado" [required]="true"
-                        [(ngModel)]="client.state" [disabled]="disabledFields">
+                        [(ngModel)]="client.address.state" [disabled]="disabledFields">
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-3 value">
@@ -101,7 +110,7 @@
                 </div>
                 <div class="form-group">
                     <input #name="ngModel" type="text" class="form-control" placeholder="Cidade" [required]="true"
-                        [(ngModel)]="client.city" [disabled]="disabledFields" >
+                        [(ngModel)]="client.address.city" [disabled]="disabledFields">
                 </div>
             </div>
         </div>
@@ -109,7 +118,7 @@
 </div>
 <div class="row vertical-align">
     <div class="col-12 value d-flex justify-content-end mt-4" style="padding: 20px">
-        <button type="button" class="btn btn-outline-dark mr-3 button-style" (click)="cancel()">
+        <button type="button" class="btn btn-outline-dark mr-3 button-style" (click)="cancel()" [disabled]="loading">
             Cancelar
         </button>
 

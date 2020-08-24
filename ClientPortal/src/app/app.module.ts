@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NgxMaskModule } from 'ngx-mask';
 import { LoadingComponent } from './components/loading/loading.component';
+import { DatePipe, CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     LoadingComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -53,7 +53,8 @@ import { LoadingComponent } from './components/loading/loading.component';
   ],
   providers: [
     AlertService,
-    ClientService
+    ClientService,
+    DatePipe
   ],
   entryComponents: [
     ClientComponent,

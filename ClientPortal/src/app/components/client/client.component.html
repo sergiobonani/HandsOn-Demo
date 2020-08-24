@@ -1,68 +1,64 @@
 <mat-toolbar color="primary">
-    <span>CRUD - Cliente</span>
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="loadData()">
-      <mat-icon>refresh</mat-icon>
-    </button>
-    <button mat-icon-button (click)="addNew()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </mat-toolbar>
-  
-  <div class="container mat-elevation-z8">
-  
-    <div class="form">
-      <mat-form-field floatPlaceholder="never" color="accent">
-        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Procurar">
-      </mat-form-field>   
-    </div>
-  
-    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
-  
+  <span>CRUD - Cliente</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="loadData()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <button mat-icon-button (click)="addNew()">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container content mat-elevation-z8">
+
+  <div class="form">
+    <mat-form-field floatPlaceholder="never" color="accent">
+      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Procurar">
+    </mat-form-field>
+  </div>
+  <app-loading [loading]="loading">
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-elevation-z8 mat-cell">
+
       <ng-container matColumnDef="name">
-        <mat-header-cell fxFlex="30%" *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
-        <mat-cell fxFlex="30%" *matCellDef="let row"> {{row.name}}</mat-cell>
+        <mat-header-cell fxFlex="50%" *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
+        <mat-cell fxFlex="50%" *matCellDef="let row"> {{row.name}}</mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="dateOfBirth">
-        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header>Data de nascimento</mat-header-cell>
-        <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.dateOfBirth}}</mat-cell>
+        <mat-header-cell fxFlex="30%" *matHeaderCellDef mat-sort-header>Data de nascimento</mat-header-cell>
+        <mat-cell fxFlex="30%" *matCellDef="let row"> {{row.dateOfBirth | date: 'dd/MM/yyyy'}}</mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="gender">
         <mat-header-cell fxFlex="10%" *matHeaderCellDef mat-sort-header>Sexo</mat-header-cell>
         <mat-cell fxFlex="10%" *matCellDef="let row"> {{row.gender}}</mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="actions">
-        <mat-header-cell fxFlex="10%" *matHeaderCellDef>        
+        <mat-header-cell fxFlex="10%" *matHeaderCellDef>
         </mat-header-cell>
-  
+
         <mat-cell fxFlex="10%" *matCellDef="let row;">
           <button mat-icon-button color="primary" (click)="startEdit(row.id)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
-  
+
           <button mat-icon-button color="accent" (click)="deleteItem(row)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
-  
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-  
-  
-    <div class="no-results" [style.display]="!hasData() ? '' : 'none'">
-      Sem registros
-    </div>
-  
-    <mat-paginator #paginator
-                   [length]="dataSource.filteredData.length"
-                   [pageIndex]="0"
-                   [pageSize]="10"
-                   [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
+  </app-loading>
+
+  <div class="no-results" [style.display]="!hasData() ? '' : 'none'">
+    Sem registros
   </div>
-  
+
+  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
+</div>

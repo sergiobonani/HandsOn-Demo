@@ -12,6 +12,7 @@ namespace Demo.Application.AutoMapper
         public ViewModelToDomainMappingProfile()
         {
             CreateMap<ClientViewModel, Client>();
+            CreateMap<AddressViewModel, Address>();
         }
     }
 }

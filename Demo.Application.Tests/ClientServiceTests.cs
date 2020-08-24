@@ -1,5 +1,4 @@
 using AutoMapper;
-using EntityFrameworkCoreMock;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -12,6 +11,7 @@ using Demo.Infra.Repositories;
 using System;
 using System.Linq;
 using Xunit;
+using EntityFrameworkCore3Mock;
 
 namespace Demo.Application.Tests
 {
@@ -19,19 +19,45 @@ namespace Demo.Application.Tests
     {
         public Mock<ClientService> MockClient()
         {
-            var mm = new Mock<IMapper>().Object;
-            var mock = new Mock<ClientService>(MockClientRepository().Object, mm);
+            var mock = new Mock<ClientService>(MockClientRepository().Object, MockMapper().Object);
 
-           // mock.Setup(x => x.Add(ClientServiceDataTests.GetClient())).Returns(new ViewModels.Notifications.ResultWrap<ClientViewModel>().SetSuccess());
+            //mock.Setup(x => x.Add(It.IsAny<ClientViewModel>())).Returns(new ViewModels.Notifications.ResultWrap<ClientViewModel>().SetSuccess());
 
             return mock;
         }
 
+        public Mock<IMapper> MockMapper()
+        {
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(m => m.Map<ClientViewModel, Client>(It.IsAny<ClientViewModel>())).Returns(ClientServiceDataTests.GetEntitiesClient().First());
+
+            return mapperMock;
+        }
+
+
         public Mock<ClientRepository> MockClientRepository()
         {
-            var dbContextMock = new DbContextMock<TestDbContext>();
-            var usersDbSetMock = dbContextMock.CreateDbSetMock(x => x.Client, ClientServiceDataTests.GetEntitiesClient());
-            var mock = new Mock<ClientRepository>(dbContextMock.Object);
+            var context = new Mock<ApplicationDbContext>();
+            var set = new Mock<DbSet<Client>>();
+
+            context.Setup(c => c.Set<Client>()).Returns(set.Object);
+            var mock = new Mock<ClientRepository>(null);
+
+            //var teste = new Mock<RepositoryBase<Client>>();
+            //teste.Setup(x => x.Add(It.IsAny<Client>()));
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+              .UseInMemoryDatabase(databaseName: "HandsOn")
+              .Options;
+
+            using (var contexta = new ApplicationDbContext(options))
+            {
+                contexta.Client.Add(ClientServiceDataTests.GetEntityClient());
+
+
+                contexta.SaveChanges();
+            }
+
             return mock;
         }
 
@@ -42,7 +68,8 @@ namespace Demo.Application.Tests
             {
             }
 
-            public virtual DbSet<Client> Client { get; set; }
+            public virtual FakeDbSet<Client> Client { get; set; }
+            public virtual FakeDbSet<Address> Address { get; set; }
         }
 
         [Fact]
@@ -68,13 +95,16 @@ namespace Demo.Application.Tests
                 Name = name, 
                 DateOfBirth = dateOfBirth, 
                 Gender = gender, 
-                ZipCode = zipCode,
-                Address = address,
-                AddressNumber = addressNumber,
-                Complement = complement,
-                District = district,
-                State = state,
-                City = city
+                Address = new AddressViewModel 
+                { 
+                    ZipCode = zipCode,
+                    AddressDescription = address,
+                    AddressNumber = addressNumber,
+                    Complement = complement,
+                    District = district,
+                    State = state,
+                    City = city
+                }
             };
 
             var result = service.Add(newEntity);

@@ -2,12 +2,12 @@
 
 # Backend (.Net core e MYSql, podendo ser usado com SQL Server)
 
-O objeto é criar toda a estrutura de um CRUD, utilizando padrões de desenvolvimento e testes. Nesse projeto, ao final do desenvolvimento, deverá ser contemplado as estruturas em camadas, validações de campos, persistência de dados (incluindo criação da base) e testes.
+O objetivo é criar toda a estrutura de um CRUD, utilizando padrões de desenvolvimento e testes. Nesse projeto, ao final do desenvolvimento, deverá ser contemplado as estruturas em camadas, validações de campos, persistência de dados (incluindo criação da base) e testes.
 
 O projeto usa .Net Core 3.*.
 
 ##### Progresso Backend
-- Inserção básica, sem validações de campos e sem testes unitários/funcionais.
+- Inserção/edição e remoção básicos, validações de campos e sem testes unitários/funcionais.
 
 # Frontend (Angular)
 
@@ -16,8 +16,8 @@ O objetivo é criar um CRUD utilizando Angular, componetizando e reutilizando c�
 O projeto usa Angular Material 8.*, Angular Material e Bootstrap.
 
 ##### Progresso Frontend
-- Contrução da tela, adicionar/editar. 
-O uso apresenta problemas: não é possível fazer conexão com o backend, a listagem não está bem definida, falta validações, a edição do item acaba alterando a listagem.
+- Listagem de clientes, opções adicionar/editar e remover. 
+Há conexão com o backend, faltam validações e destaque dos campos, não há implementação de testes, não foi feito tela de login e não há implementação da internacionalização.
 
 # Requisitos mínimos para rodar o projeto
 - Visual Studio
@@ -32,3 +32,4 @@ O uso apresenta problemas: não é possível fazer conexão com o backend, a lis
 # Como utilizar o Frontend?
 - O projeto front se encontra na pasta PortalClient. Apesar de estar na mesma pasta, não há vínculo com o backend/solution.
 - Utilize npm install e depois npm start.
+- Caso necessário, altere o environment para utilizar a url correta de conexão com o back

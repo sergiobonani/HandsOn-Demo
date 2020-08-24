@@ -23,7 +23,11 @@ export class AlertService{
             }
 
             return;
-        }else{
+        }
+        else if(error && error.status === 0){
+            this.showMessage('Ops, aconteceu algum problema! Tente mais tarde.', severity);
+        }
+        else{
             this.showMessage(messageError, severity);
         }
     }

@@ -9,4 +9,5 @@ namespace Demo.Application.Interfaces
     {
         void Validate(Client client);
     }
+
 }

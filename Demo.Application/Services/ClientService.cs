@@ -25,7 +25,12 @@ namespace Demo.Application.Services
         public ResultWrap<ClientViewModel> Add(ClientViewModel obj)
         {
             var result = new ResultWrap<ClientViewModel>();
-            
+
+            if (obj == null)
+            {
+                return result.SetError(Geral.InvalidFields, EKnowErrors.BusinessError);
+            }
+
             var entity = _mapper.Map<ClientViewModel, Client>(obj);
 
             var validation = new ClientValidation().Validate(entity);

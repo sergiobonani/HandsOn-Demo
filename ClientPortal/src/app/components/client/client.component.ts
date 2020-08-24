@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { HttpClient } from '@angular/common/http';
 import { ClientService } from 'src/app/services/client.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { ClientEditDialogComponent } from './edit/client-edit-dialog.component';
 import { ClientDeleteDialogComponent } from './delete/client-delete-dialog.component';
 
@@ -22,6 +22,7 @@ export class ClientComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   
+  loading = false;
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
@@ -33,9 +34,14 @@ export class ClientComponent implements OnInit {
   }
 
   loadData(){
+    this.loading = true;
     this.dataService.getAllClients().subscribe(result =>{
       this.dataSource.data = result as Client[];
-    })
+      this.loading = false;
+    }, error => {
+      this.alertService.showStickyMessage("", MessageSeverity.error, error);
+      this.loading = false;
+    });
   }
 
   hasData(){

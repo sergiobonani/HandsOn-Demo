@@ -132,6 +132,9 @@
   <data name="Complement" xml:space="preserve">
     <value>Complemento</value>
   </data>
+  <data name="Country" xml:space="preserve">
+    <value>País</value>
+  </data>
   <data name="DateOfBirth" xml:space="preserve">
     <value>Data de nascimento</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="InvalidField" xml:space="preserve">
     <value>Campo {0} inválido</value>
+  </data>
+  <data name="InvalidFields" xml:space="preserve">
+    <value>Campos passados estão inválidos</value>
   </data>
   <data name="MustHaveBetweenCharacters" xml:space="preserve">
     <value>O campo {0} deve ter entre {1} a {2} caracteres</value>

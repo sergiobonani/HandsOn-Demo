@@ -1,4 +1,5 @@
 <div *ngIf="loading" [ngClass]="['loading-overlay', additionalClass]">
-    <div class="loading-spinner"></div>
+    <!-- <div class="loading-spinner"></div> -->
+    <span>Carregando ...</span>
 </div>
 <ng-content *ngIf="!loading"></ng-content>
